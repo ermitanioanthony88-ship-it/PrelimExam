@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f3f2">
+  <title>Log in | Playblock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #202421;
+      --muted: #747b76;
+      --line: #e4e7e4;
+      --paper: #fff;
+      --canvas: #f2f3f2;
+      --green: #b9ed59;
+      --green-dark: #8cc72d;
+      font-family: "DM Sans", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background: var(--canvas);
+    }
+
+    a { color: inherit; }
+
+    .topbar {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 5vw, 76px);
+      background: rgba(255, 255, 255, .82);
+      border-bottom: 1px solid #e8eae8;
+    }
+
+    .brand {
+      display: inline-flex;
+      gap: 11px;
+      align-items: center;
+      text-decoration: none;
+      font: 700 20px "Space Grotesk", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 29px;
+      height: 29px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      background: var(--green);
+      border: 2px solid var(--ink);
+      transform: rotate(-8deg);
+    }
+
+    .brand-mark::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--ink);
+      box-shadow: 9px 0 var(--ink), 0 9px var(--ink), 9px 9px var(--ink);
+      transform: scale(.48);
+    }
+
+    .topbar-note {
+      color: #5e655f;
+      font-size: 14px;
+    }
+
+    .topbar-note a {
+      margin-left: 8px;
+      font-weight: 700;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    main {
+      min-height: calc(100vh - 76px);
+      display: grid;
+      grid-template-columns: minmax(340px, 1fr) minmax(400px, 500px);
+      align-items: center;
+      gap: clamp(36px, 8vw, 120px);
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 48px 0 64px;
+    }
+
+    .world {
+      min-height: 520px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      isolation: isolate;
+      padding: 36px;
+      color: white;
+      background: #364b39 url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1300&q=85") center 47% / cover;
+      border-radius: 5px;
+      animation: reveal .65s ease-out both;
+    }
+
+    .world::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(14, 24, 17, .05) 28%, rgba(14, 24, 17, .78) 100%);
+    }
+
+    .world-tag {
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      color: #202421;
+      background: var(--green);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .world-tag::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: currentColor;
+      border-radius: 50%;
+    }
+
+    .world h1 {
+      max-width: 430px;
+      margin: 0;
+      font: 700 clamp(34px, 4vw, 48px)/1.04 "Space Grotesk", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .world p {
+      max-width: 330px;
+      margin: 13px 0 0;
+      color: rgba(255, 255, 255, .84);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .login {
+      width: 100%;
+      max-width: 440px;
+      justify-self: end;
+      padding: 38px 36px 32px;
+      background: var(--paper);
+      border: 1px solid #e8eae8;
+      border-radius: 5px;
+      box-shadow: 0 14px 38px rgba(28, 36, 29, .055);
+      animation: reveal .65s .08s ease-out both;
+    }
+
+    .eyebrow {
+      margin: 0 0 9px;
+      color: #73806d;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .login h2 {
+      margin: 0;
+      font: 700 30px/1.15 "Space Grotesk", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      margin: 9px 0 27px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .field { margin-top: 17px; }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+      padding: 0 13px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid #dfe3df;
+      border-radius: 3px;
+      font: 500 14px "DM Sans", sans-serif;
+      outline: none;
+      transition: border-color .16s, box-shadow .16s;
+    }
+
+    input::placeholder { color: #a0a6a1; }
+
+    input:focus {
+      border-color: #7da43b;
+      box-shadow: 0 0 0 3px rgba(185, 237, 89, .25);
+    }
+
+    .password-wrap { position: relative; }
+
+    .password-wrap input { padding-right: 68px; }
+
+    .show-password {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      padding: 5px 0;
+      color: #59615a;
+      background: none;
+      border: 0;
+      font: 700 12px "DM Sans", sans-serif;
+      cursor: pointer;
+      transform: translateY(-50%);
+    }
+
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 17px 0 21px;
+      font-size: 12px;
+    }
+
+    .remember {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #555d57;
+      cursor: pointer;
+    }
+
+    .remember input {
+      width: 15px;
+      height: 15px;
+      margin: 0;
+      accent-color: #85b837;
+    }
+
+    .form-options a, .signup a {
+      font-weight: 700;
+      text-underline-offset: 3px;
+    }
+
+    .submit {
+      width: 100%;
+      height: 49px;
+      color: #1e2519;
+      background: var(--green);
+      border: 1px solid #a8db4d;
+      border-radius: 3px;
+      font: 800 14px "DM Sans", sans-serif;
+      cursor: pointer;
+      transition: background .16s, transform .16s;
+    }
+
+    .submit:hover { background: #aee349; }
+    .submit:active { transform: translateY(1px); }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin: 22px 0;
+      color: #909691;
+      font-size: 11px;
+    }
+
+    .divider::before, .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--line);
+    }
+
+    .alternate {
+      width: 100%;
+      height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--ink);
+      background: white;
+      border: 1px solid #dfe3df;
+      border-radius: 3px;
+      font: 700 13px "DM Sans", sans-serif;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .alternate:hover { background: #f8f9f7; }
+
+    .alternate-mark {
+      width: 16px;
+      height: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .alternate-mark i:nth-child(1) { background: #4285f4; }
+    .alternate-mark i:nth-child(2) { background: #34a853; }
+    .alternate-mark i:nth-child(3) { background: #fbbc05; }
+    .alternate-mark i:nth-child(4) { background: #ea4335; }
+
+    .signup {
+      margin: 22px 0 0;
+      color: #6b736c;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .message {
+      min-height: 18px;
+      margin: 12px 0 0;
+      color: #536f2e;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .message:empty { display: none; }
+
+    footer {
+      padding: 0 20px 24px;
+      color: #929993;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 820px) {
+      main {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 26px;
+        width: min(500px, calc(100% - 36px));
+        padding: 30px 0 40px;
+      }
+
+      .world {
+        width: 100%;
+        min-height: 210px;
+        padding: 23px;
+      }
+
+      .world-tag { top: 14px; left: 14px; }
+      .world h1 { max-width: 350px; font-size: 31px; }
+      .world p { margin-top: 7px; font-size: 13px; }
+      .login { justify-self: center; }
+    }
+
+    @media (max-width: 480px) {
+      .topbar { height: 65px; padding: 0 18px; }
+      .brand { font-size: 18px; }
+      .topbar-note { font-size: 12px; }
+      .topbar-note a { margin-left: 4px; }
+      main { min-height: calc(100vh - 65px); gap: 19px; width: calc(100% - 28px); }
+      .world { min-height: 180px; }
+      .login { padding: 29px 22px 25px; }
+      .login h2 { font-size: 27px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Playblock home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>playblock</span>
+    </a>
+    <span class="topbar-note">New here?<a href="#create-account">Sign up</a></span>
+  </header>
+
+  <main>
+    <section class="world" aria-label="Explore a game world">
+      <span class="world-tag">Your next adventure</span>
+      <h1>Find your kind of fun.</h1>
+      <p>Jump into a world made by players, and make it yours.</p>
+    </section>
+
+    <section class="login" aria-labelledby="login-title">
+      <p class="eyebrow">Welcome back</p>
+      <h2 id="login-title">Log in to Playblock</h2>
+      <p class="intro">Pick up right where the fun begins.</p>
+
+      <form id="login-form">
+        <div class="field">
+          <label for="username">Username or email</label>
+          <input id="username" name="username" type="text" autocomplete="username" placeholder="Enter your username or email" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="password-wrap">
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+            <button class="show-password" type="button" aria-controls="password" aria-pressed="false">Show</button>
+          </div>
+        </div>
+        <div class="form-options">
+          <label class="remember"><input type="checkbox" name="remember"> Remember me</label>
+          <a href="#forgot-password">Forgot password?</a>
+        </div>
+        <button class="submit" type="submit">Log in</button>
+        <p class="message" id="form-message" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="divider">OR</div>
+      <button class="alternate" type="button" id="quick-login">
+        <span class="alternate-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        Continue with Google
+      </button>
+      <p class="signup" id="create-account">Don't have an account? <a href="#create-account">Create one</a></p>
+    </section>
+  </main>
+  <footer>© 2026 Playblock. All worlds welcome.</footer>
+
+  <script>
+    const password = document.querySelector("#password");
+    const showPassword = document.querySelector(".show-password");
+    const message = document.querySelector("#form-message");
+
+    showPassword.addEventListener("click", () => {
+      const isVisible = password.type === "text";
+      password.type = isVisible ? "password" : "text";
+      showPassword.textContent = isVisible ? "Show" : "Hide";
+      showPassword.setAttribute("aria-pressed", String(!isVisible));
+    });
+
+    document.querySelector("#login-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      message.textContent = "Login is ready to connect to your account service.";
+    });
+
+    document.querySelector("#quick-login").addEventListener("click", () => {
+      message.textContent = "Google sign-in will be available when an account service is connected.";
+    });
+  </script>
+</body>
+</html>
